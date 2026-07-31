@@ -1,0 +1,192 @@
+You are an expert Full Stack Developer, UI/UX Designer, and AI Engineer.
+
+Build a modern, responsive AI-powered web application called:
+
+"MeetingMind AI"
+
+The website converts messy meeting notes or transcripts into:
+
+1. Executive Summary
+2. Action Items
+3. Meeting Decisions
+4. Pending Questions
+5. Risks
+6. Follow-up Tasks
+
+Use HTML, CSS, JavaScript, and Bootstrap 5 only.
+
+The website must look premium, similar to Notion + ChatGPT.
+
+-----------------------------------
+PAGES
+-----------------------------------
+
+Create only one responsive page.
+
+Navbar:
+- Logo
+- Home
+- Features
+- About
+- Contact
+
+Hero Section:
+Title:
+"AI Meeting Notes Converter"
+
+Subtitle:
+Convert messy meeting transcripts into professional summaries and action items instantly.
+
+Buttons:
+- Try Now
+- Learn More
+
+-----------------------------------
+MAIN TOOL
+-----------------------------------
+
+Create a large textarea where users can paste meeting notes.
+
+Placeholder:
+
+"Paste meeting transcript here..."
+
+Below it place a button:
+
+✨ Generate Summary
+
+When clicked, simulate AI processing using JavaScript.
+
+Display loading animation for 2 seconds.
+
+Then generate:
+
+-----------------------------------
+Executive Summary
+-----------------------------------
+
+3–5 bullet summary.
+
+-----------------------------------
+Action Items Table
+-----------------------------------
+
+Columns:
+
+Owner
+
+Task
+
+Priority
+
+Deadline
+
+Status
+
+-----------------------------------
+Decisions Made
+-----------------------------------
+
+Bullet list.
+
+-----------------------------------
+Pending Questions
+-----------------------------------
+
+Bullet list.
+
+-----------------------------------
+Risks
+-----------------------------------
+
+Bullet list.
+
+-----------------------------------
+FEATURES SECTION
+-----------------------------------
+
+Cards:
+
+AI Summarization
+
+Action Item Extraction
+
+Deadline Detection
+
+Priority Assignment
+
+Easy Export
+
+Professional Reports
+
+-----------------------------------
+Extra Features
+-----------------------------------
+
+Dark Mode Toggle
+
+Copy Summary Button
+
+Download Report as PDF
+
+Character Counter
+
+Responsive Design
+
+Smooth Animations
+
+Toast Notification
+
+-----------------------------------
+Footer
+-----------------------------------
+
+Made for AI Hackathon 2026
+
+-----------------------------------
+DESIGN
+-----------------------------------
+
+Use:
+
+Glassmorphism
+
+Rounded Cards
+
+Gradient Background
+
+Shadow Effects
+
+Modern Fonts
+
+Blue + Purple Theme
+
+Hover Animations
+
+Responsive Layout
+
+-----------------------------------
+CODE REQUIREMENTS
+-----------------------------------
+
+Separate files:
+
+index.html
+
+style.css
+
+script.js
+
+Use Bootstrap CDN.
+
+Use Font Awesome Icons.
+
+Code should be clean and commented.
+
+No backend required.
+
+Simulate AI output with JavaScript.
+
+Provide complete code.
+
+Do not omit any section.
