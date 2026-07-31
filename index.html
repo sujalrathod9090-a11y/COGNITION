@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MeetingMind AI — Turn meeting chaos into clear action</title>
+  <meta name="description" content="Convert messy meeting transcripts into professional summaries, action items, decisions, risks, and follow-ups — instantly." />
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <!-- Google Fonts: Space Grotesk (display) + Inter (body) + JetBrains Mono (data/utility) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ============ NAVBAR ============ -->
+  <nav class="navbar navbar-expand-lg mm-navbar fixed-top">
+    <div class="container">
+      <a class="navbar-brand mm-logo" href="#home">
+        <span class="mm-logo-mark"><i class="fa-solid fa-diagram-project"></i></span>
+        MeetingMind <span class="mm-logo-accent">AI</span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mmNav" aria-controls="mmNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="mmNav">
+        <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
+          <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="#features">Features</a></li>
+          <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+          <li class="nav-item">
+            <button id="themeToggle" class="mm-theme-toggle" type="button" aria-label="Toggle dark mode" title="Toggle theme">
+              <i class="fa-solid fa-moon"></i>
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ============ HERO ============ -->
+  <header id="home" class="mm-hero">
+    <div class="mm-hero-glow" aria-hidden="true"></div>
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-11 mx-auto text-center">
+          <span class="mm-eyebrow"><i class="fa-solid fa-wand-magic-sparkles"></i> From transcript to takeaway</span>
+          <h1 class="mm-hero-title">AI Meeting Notes Converter</h1>
+          <p class="mm-hero-subtitle">
+            Convert messy meeting transcripts into professional summaries and action items instantly.
+          </p>
+          <div class="mm-hero-actions">
+            <a href="#tool" class="btn mm-btn-primary btn-lg">
+              <i class="fa-solid fa-bolt"></i> Try Now
+            </a>
+            <a href="#features" class="btn mm-btn-ghost btn-lg">
+              Learn More <i class="fa-solid fa-arrow-down"></i>
+            </a>
+          </div>
+
+          <!-- Signature element: a live "before/after" strip -->
+          <div class="mm-transform-strip" aria-hidden="true">
+            <div class="mm-transform-side mm-transform-before">
+              <i class="fa-regular fa-file-lines"></i>
+              <span>"...so yeah I think maybe Sarah can look at the API by, I dunno, next Friday? if that works..."</span>
+            </div>
+            <div class="mm-transform-arrow"><i class="fa-solid fa-arrow-right-long"></i></div>
+            <div class="mm-transform-side mm-transform-after">
+              <i class="fa-solid fa-circle-check"></i>
+              <span><strong>Sarah</strong> — Review API — <strong>Due Fri</strong> — <em>High</em></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============ MAIN TOOL ============ -->
+  <section id="tool" class="mm-section mm-tool-section">
+    <div class="container">
+      <div class="mm-section-head text-center">
+        <span class="mm-eyebrow">The tool</span>
+        <h2>Paste it. Convert it. Ship it.</h2>
+        <p class="mm-section-sub">Drop in a raw transcript and get a structured, shareable report in seconds.</p>
+      </div>
+
+      <div class="mm-glass-panel mm-tool-panel">
+        <div class="mm-tool-input-head">
+          <label for="transcriptInput" class="mm-tool-label">
+            <i class="fa-regular fa-file-lines"></i> Meeting transcript
+          </label>
+          <span class="mm-char-counter"><span id="charCount">0</span> characters</span>
+        </div>
+
+        <textarea
+          id="transcriptInput"
+          class="mm-textarea"
+          rows="10"
+          placeholder="Paste meeting transcript here..."></textarea>
+
+        <div class="mm-tool-actions">
+          <button id="loadSampleBtn" class="btn mm-btn-subtle" type="button">
+            <i class="fa-regular fa-file-lines"></i> Load sample transcript
+          </button>
+          <button id="generateBtn" class="btn mm-btn-primary mm-btn-generate" type="button">
+            <span class="mm-btn-label"><i class="fa-solid fa-wand-magic-sparkles"></i> Generate Summary</span>
+          </button>
+        </div>
+
+        <!-- Loading state -->
+        <div id="loadingState" class="mm-loading d-none">
+          <div class="mm-loading-orb">
+            <span></span><span></span><span></span>
+          </div>
+          <p class="mm-loading-text" id="loadingText">Reading the room...</p>
+        </div>
+      </div>
+
+      <!-- Results -->
+      <div id="resultsArea" class="mm-results d-none">
+
+        <div class="mm-results-toolbar">
+          <div class="mm-results-toolbar-title">
+            <i class="fa-solid fa-circle-check"></i> Report ready
+          </div>
+          <div class="mm-results-toolbar-actions">
+            <button id="copyBtn" class="btn mm-btn-subtle btn-sm" type="button">
+              <i class="fa-regular fa-copy"></i> Copy Summary
+            </button>
+            <button id="downloadBtn" class="btn mm-btn-subtle btn-sm" type="button">
+              <i class="fa-solid fa-file-pdf"></i> Download Report
+            </button>
+          </div>
+        </div>
+
+        <!-- Executive Summary -->
+        <div class="mm-glass-panel mm-result-card">
+          <h3 class="mm-result-title"><i class="fa-solid fa-layer-group"></i> Executive Summary</h3>
+          <ul id="summaryList" class="mm-bullet-list"></ul>
+        </div>
+
+        <!-- Action Items -->
+        <div class="mm-glass-panel mm-result-card">
+          <h3 class="mm-result-title"><i class="fa-solid fa-list-check"></i> Action Items</h3>
+          <div class="table-responsive">
+            <table class="table mm-table align-middle">
+              <thead>
+                <tr>
+                  <th>Owner</th>
+                  <th>Task</th>
+                  <th>Priority</th>
+                  <th>Deadline</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="actionItemsBody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="row g-4">
+          <!-- Decisions -->
+          <div class="col-md-4">
+            <div class="mm-glass-panel mm-result-card h-100">
+              <h3 class="mm-result-title"><i class="fa-solid fa-gavel"></i> Decisions Made</h3>
+              <ul id="decisionsList" class="mm-bullet-list mm-bullet-decisions"></ul>
+            </div>
+          </div>
+          <!-- Pending Questions -->
+          <div class="col-md-4">
+            <div class="mm-glass-panel mm-result-card h-100">
+              <h3 class="mm-result-title"><i class="fa-solid fa-circle-question"></i> Pending Questions</h3>
+              <ul id="questionsList" class="mm-bullet-list mm-bullet-questions"></ul>
+            </div>
+          </div>
+          <!-- Risks -->
+          <div class="col-md-4">
+            <div class="mm-glass-panel mm-result-card h-100">
+              <h3 class="mm-result-title"><i class="fa-solid fa-triangle-exclamation"></i> Risks</h3>
+              <ul id="risksList" class="mm-bullet-list mm-bullet-risks"></ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Follow-up Tasks -->
+        <div class="mm-glass-panel mm-result-card">
+          <h3 class="mm-result-title"><i class="fa-solid fa-arrow-rotate-right"></i> Follow-up Tasks</h3>
+          <ul id="followupList" class="mm-bullet-list mm-bullet-followup"></ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FEATURES ============ -->
+  <section id="features" class="mm-section mm-features-section">
+    <div class="container">
+      <div class="mm-section-head text-center">
+        <span class="mm-eyebrow">Capabilities</span>
+        <h2>Built for how meetings actually go</h2>
+        <p class="mm-section-sub">Six things MeetingMind handles so nothing falls through the cracks.</p>
+      </div>
+
+      <div class="row g-4">
+        <div class="col-md-6 col-lg-4">
+          <div class="mm-feature-card">
+            <div class="mm-feature-icon"><i class="fa-solid fa-brain"></i></div>
+            <h4>AI Summarization</h4>
+            <p>Distills long, rambling transcripts into a tight executive summary anyone can skim in seconds.</p>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+          <div class="mm-feature-card">
+            <div class="mm-feature-icon"><i class="fa-solid fa-list-check"></i></div>
+            <h4>Action Item Extraction</h4>
+            <p>Finds every commitment buried in the conversation and turns it into a trackable task.</p>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+          <div class="mm-feature-card">
+            <div class="mm-feature-icon"><i class="fa-regular fa-calendar-check"></i></div>
+            <h4>Deadline Detection</h4>
+            <p>Catches loose dates like "by Friday" or "next sprint" and converts them into clear due dates.</p>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+          <div class="mm-feature-card">
+            <div class="mm-feature-icon"><i class="fa-solid fa-flag"></i></div>
+            <h4>Priority Assignment</h4>
+            <p>Reads tone and urgency to flag what needs attention now versus what can wait.</p>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+          <div class="mm-feature-card">
+            <div class="mm-feature-icon"><i class="fa-solid fa-file-export"></i></div>
+            <h4>Easy Export</h4>
+            <p>Copy the summary or download the full report as a polished PDF in one click.</p>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+          <div class="mm-feature-card">
+            <div class="mm-feature-icon"><i class="fa-solid fa-file-shield"></i></div>
+            <h4>Professional Reports</h4>
+            <p>Every output is formatted and ready to paste into Slack, email, or your project tracker.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ABOUT ============ -->
+  <section id="about" class="mm-section mm-about-section">
+    <div class="container">
+      <div class="row align-items-center g-5">
+        <div class="col-lg-6">
+          <span class="mm-eyebrow">About</span>
+          <h2>Meetings shouldn't need a translator.</h2>
+          <p class="mm-about-copy">
+            MeetingMind AI was built on a simple observation: meetings generate messy notes or transcripts,
+            and important action items often get lost or forgotten. Someone has to reread the whole thing,
+            guess who owns what, and chase down deadlines that were only ever mentioned in passing.
+          </p>
+          <p class="mm-about-copy">
+            MeetingMind reads the mess for you — surfacing decisions, owners, deadlines, open questions,
+            and risks in a format your team can act on immediately.
+          </p>
+          <ul class="mm-about-list">
+            <li><i class="fa-solid fa-check"></i> No sign-up required to try it</li>
+            <li><i class="fa-solid fa-check"></i> Works with rough, unstructured transcripts</li>
+            <li><i class="fa-solid fa-check"></i> Export-ready in one click</li>
+          </ul>
+        </div>
+        <div class="col-lg-6">
+          <div class="mm-glass-panel mm-about-panel">
+            <div class="mm-about-stat">
+              <div class="mm-about-stat-num">6</div>
+              <div class="mm-about-stat-label">Structured outputs<br>per transcript</div>
+            </div>
+            <div class="mm-about-stat">
+              <div class="mm-about-stat-num">&lt;2s</div>
+              <div class="mm-about-stat-label">From paste<br>to report</div>
+            </div>
+            <div class="mm-about-stat">
+              <div class="mm-about-stat-num">0</div>
+              <div class="mm-about-stat-label">Action items<br>left behind</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CONTACT ============ -->
+  <section id="contact" class="mm-section mm-contact-section">
+    <div class="container">
+      <div class="mm-glass-panel mm-contact-panel text-center">
+        <span class="mm-eyebrow">Contact</span>
+        <h2>Want MeetingMind on your team?</h2>
+        <p class="mm-section-sub">Reach out and we'll get you set up.</p>
+        <div class="mm-contact-links">
+          <a href="mailto:hello@meetingmind.ai" class="mm-contact-pill">
+            <i class="fa-regular fa-envelope"></i> hello@meetingmind.ai
+          </a>
+          <a href="#" class="mm-contact-pill">
+            <i class="fa-brands fa-github"></i> GitHub
+          </a>
+          <a href="#" class="mm-contact-pill">
+            <i class="fa-brands fa-linkedin"></i> LinkedIn
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="mm-footer">
+    <div class="container">
+      <div class="mm-footer-inner">
+        <span class="mm-logo mm-footer-logo">
+          <span class="mm-logo-mark"><i class="fa-solid fa-diagram-project"></i></span>
+          MeetingMind <span class="mm-logo-accent">AI</span>
+        </span>
+        <p class="mm-footer-tagline">Made for AI COGNITION 2026</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Toast container -->
+  <div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="mmToast" class="toast mm-toast align-items-center border-0" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="d-flex">
+        <div class="toast-body">
+          <i class="fa-solid fa-circle-check me-2"></i>
+          <span id="mmToastMsg">Done.</span>
+        </div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
